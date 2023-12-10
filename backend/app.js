@@ -20,7 +20,6 @@ const NotFound = require('./errors/NotFound');
 
 const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 mongoose.connect(MONGO_URL);
-
 const db = mongoose.connection;
 
 app.use(express.json());
