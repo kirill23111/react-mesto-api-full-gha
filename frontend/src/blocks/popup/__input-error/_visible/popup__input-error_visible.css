@@ -1,0 +1,14 @@
+.popup__input-error_visible {
+    display: block;
+    font-size: 12px;
+    line-height: 14px;
+    color: #FF0000;
+    box-sizing: border-box;
+    margin-top: 5px;
+    position: absolute;
+    top: 138px;
+}
+
+.popup__input-error_visible:last-of-type:not(:first-of-type) {
+    top: 195px;
+}

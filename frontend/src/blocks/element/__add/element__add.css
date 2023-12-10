@@ -1,0 +1,17 @@
+.element__add {
+  background-image: url(../../../images/vector.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 0;
+  width: 22px;
+  height: 19px;
+  align-items: center;
+  background-color: #fff;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 2px;
+}
+
+.element__add:hover {
+  opacity: 0.5;
+}

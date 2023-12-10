@@ -1,0 +1,22 @@
+.popup-full__title {
+    max-width: 330px;
+    max-height: 23px;
+    font-style: normal;
+    color: black;
+    margin: 10px 0 0 0;
+    padding: 0;
+    font-family: 'Inter', 'serif', 'sans-serif';
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .popup-full__title {
+      font-size: 18px;
+      line-height: calc(22 / 18);
+      padding-bottom: 68px;
+    }
+  }

@@ -1,0 +1,12 @@
+.popup__button {
+	width: 100%;
+	height: 50px;
+}
+
+.popup__button:not(.popup__button_invalid):not(.popup__button_disabled) {
+	cursor: pointer;
+}
+
+.popup__button:not(.popup__button_invalid):not(.popup__button_disabled):hover {
+	opacity: 0.8;
+}

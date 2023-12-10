@@ -1,0 +1,14 @@
+.header__button {
+    color: white;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    height: 22px;
+    padding-top: 20px;
+    text-decoration: none;
+  }
+  
+  .header__button:hover {
+    opacity: 0.6;
+  }
+  

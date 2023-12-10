@@ -1,0 +1,18 @@
+.profile__image_button {
+  cursor: pointer;
+  position: absolute;
+  max-width: 120px;
+  border-radius: 50%;
+  margin-right: 30px;
+  opacity: 0;
+  width: 120px;
+  height: 120px;
+}
+
+.profile__image_button:hover {
+  background-image: url(../../../../images/avatarNew.svg);
+  opacity: 0.8;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: black;
+}
