@@ -27,7 +27,13 @@ export const authorize = async (email, password) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  }).then(getResponse)
+  })
+  .then(getResponse)
+  .then(response => {
+    if ('token' in response) {
+      api.setJwtToken(response.token);
+    }
+  })
 };
 
 export const checkToken = async (token) => {
@@ -36,7 +42,7 @@ export const checkToken = async (token) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: token,
     },
   }).then(getResponse)
 };
