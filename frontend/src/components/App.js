@@ -44,8 +44,9 @@ function App() {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (!token || token === "undefined") {
+    const token = api.getJwtToken();
+
+    if (!token || token === null) {
       setIsLoggedIn(false);
       return;
     } else {
@@ -189,7 +190,6 @@ function App() {
         };
       }
 
-      localStorage.setItem("jwt", token);
       setEmail(email);
       setIsLoggedIn(true);
     });

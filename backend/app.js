@@ -15,7 +15,6 @@ const usersRoutes = require('./routes/usersRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const { login, registration } = require('./controllers/users');
 const authMiddleware = require('./middlewares/auth');
-const cors = require('cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFound = require('./errors/NotFound');
 require('dotenv').config();
@@ -24,7 +23,6 @@ const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process
 mongoose.connect(MONGO_URL);
 const db = mongoose.connection;
 
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
