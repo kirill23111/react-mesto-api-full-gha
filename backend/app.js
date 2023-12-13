@@ -53,8 +53,6 @@ app.post(
   login,
 );
 
-app.use(createProxyMiddleware({ target: 'http://api.mestoproject.nomoredomainsmonster.ru', changeOrigin: true }));
-
 db.on('error', (error) => {
   console.error('Ошибка подключения к MongoDB:', error);
 });
