@@ -1,4 +1,6 @@
-export const BASE_URL = "https://auth.nomoreparties.co";
+import api from './api';
+
+export const BASE_URL = api._baseUrl;
 
 function getResponse(res) {
   if (!res.ok) {
