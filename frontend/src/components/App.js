@@ -53,10 +53,11 @@ function App() {
       auth
         .checkToken(token)
         .then((user) => {
-          setEmail(user.data.email);
+          setEmail(user.email);
           setIsLoggedIn(true);
         })
-        .catch(() => {
+        .catch((err) => {
+          console.error(err);
           setIsLoggedIn(false);
         });
     }

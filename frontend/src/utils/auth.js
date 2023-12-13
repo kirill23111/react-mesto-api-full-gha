@@ -31,8 +31,8 @@ export const authorize = async (email, password) => {
   })
   .then(getResponse)
   .then(response => {
-    if ('token' in response) {
-      api.setJwtToken(response.token);
+    if (api.keyJwtLocalStorage in response) {
+      api.setJwtToken(response[api.keyJwtLocalStorage]);
     }
     return response;
   })
@@ -44,7 +44,7 @@ export const checkToken = async (token) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: token,
+      [api.keyJwtLocalStorage]: token,
     },
   }).then(getResponse)
 };

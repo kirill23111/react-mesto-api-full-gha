@@ -1,5 +1,5 @@
 class Api {
-  _keyJwtLocalStorage = 'token';
+  keyJwtLocalStorage = 'jwt';
 
   constructor({ url, headers }) {
     this._baseUrl = url;
@@ -9,29 +9,13 @@ class Api {
 
   setJwtToken(token, localStorageBool = true) {
     if (localStorageBool === true) {
-      localStorage.setItem(this._keyJwtLocalStorage, JSON.stringify(token));
+      localStorage.setItem(this.keyJwtLocalStorage, JSON.stringify(token));
     }
-    this._headers[this._keyJwtLocalStorage] = token;
+    this._headers[this.keyJwtLocalStorage] = token;
   }
 
   getJwtToken() {
-    return this._headers[this._keyJwtLocalStorage];
-  }
-
-  _initJwtToken() {
-    const jwtTokenInLocalStorage = this._getJwtTokenInLocalStorage();
-
-    if (jwtTokenInLocalStorage !== null) {
-      this.setJwtToken(jwtTokenInLocalStorage, false);
-    }
-  }
-
-  _getJwtTokenInLocalStorage() {
-    const jwtTokenNotParsed = localStorage.getItem(this._keyJwtLocalStorage);
-
-    if (jwtTokenNotParsed === null) return null;
-
-    return JSON.parse(jwtTokenNotParsed);
+    return this._headers[this.keyJwtLocalStorage];
   }
 
   getUser() {
@@ -108,6 +92,22 @@ class Api {
       return res.json();
     }
     return Promise.reject(res.status);
+  }
+
+  _initJwtToken() {
+    const jwtTokenInLocalStorage = this._getJwtTokenInLocalStorage();
+
+    if (jwtTokenInLocalStorage !== null) {
+      this.setJwtToken(jwtTokenInLocalStorage, false);
+    }
+  }
+
+  _getJwtTokenInLocalStorage() {
+    const jwtTokenNotParsed = localStorage.getItem(this.keyJwtLocalStorage);
+
+    if (jwtTokenNotParsed === null) return null;
+
+    return JSON.parse(jwtTokenNotParsed);
   }
 }
 
