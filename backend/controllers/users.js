@@ -84,7 +84,6 @@ const registration = async (req, res, next) => {
     const foundUser = await getUserByEmail(email);
 
     if (foundUser !== null) {
-      console.log(email);
       return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
     }
 

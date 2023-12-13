@@ -1,4 +1,6 @@
 class Api {
+  _keyJwtLocalStorage = 'token';
+
   constructor({ url, headers }) {
     this._baseUrl = url;
     this._headers = headers;
@@ -7,13 +9,13 @@ class Api {
 
   setJwtToken(token, localStorageBool = true) {
     if (localStorageBool === true) {
-      localStorage.setItem('token', JSON.stringify(token));
+      localStorage.setItem(this._keyJwtLocalStorage, JSON.stringify(token));
     }
-    this._headers.authorization = token;
+    this._headers[this._keyJwtLocalStorage] = token;
   }
 
   getJwtToken() {
-    return this._headers.authorization;
+    return this._headers[this._keyJwtLocalStorage];
   }
 
   _initJwtToken() {
@@ -25,7 +27,7 @@ class Api {
   }
 
   _getJwtTokenInLocalStorage() {
-    const jwtTokenNotParsed = localStorage.getItem('token');
+    const jwtTokenNotParsed = localStorage.getItem(this._keyJwtLocalStorage);
 
     if (jwtTokenNotParsed === null) return null;
 

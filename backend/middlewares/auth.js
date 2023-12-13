@@ -3,7 +3,6 @@ const Internal = require('../errors/Internal');
 // const { privateKey } = require('../constans/keys');
 const privateKey = 'your-secret-key';
 const authMiddleware = (req, res, next) => {
-  console.log(req.headers);
   const token = req.cookies.jwt || req.headers.jwt;
 
   if (!token) {
