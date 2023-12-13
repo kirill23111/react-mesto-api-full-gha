@@ -32,12 +32,6 @@ class Api {
     return JSON.parse(jwtTokenNotParsed);
   }
 
-  setJwtToken() {}
-
-  getJwtToken() {
-    return this._headers.authorization || null;
-  }
-
   getUser() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
