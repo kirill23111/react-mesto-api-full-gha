@@ -19,6 +19,7 @@ export const register = (email, password) => {
     body: JSON.stringify({ password, email }),
   }).then(getResponse);
 };
+
 export const authorize = async (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",

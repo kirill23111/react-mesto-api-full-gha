@@ -11,6 +11,12 @@ class Api {
     return Promise.reject(res.status);
   }
 
+  setJwtToken() {}
+
+  getJwtToken() {
+    return this._headers.authorization || null;
+  }
+
   getUser() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
@@ -84,7 +90,6 @@ class Api {
 const api = new Api({
   url: "http://api.mestoproject.nomoredomainsmonster.ru",
   headers: {
-    authorization: "09a86537-640a-47a8-8df6-0a0da3b5f840",
     "Content-Type": "application/json",
   },
 });
