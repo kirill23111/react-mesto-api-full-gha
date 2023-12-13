@@ -33,6 +33,7 @@ export const authorize = async (email, password) => {
     if ('token' in response) {
       api.setJwtToken(response.token);
     }
+    return response;
   })
 };
 
