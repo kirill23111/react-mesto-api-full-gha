@@ -63,6 +63,9 @@ db.once('open', () => {
 
 app.use(authMiddleware, (req, res) => {
   if (res.headersSent === false) throw new NotFound('Не удалось обнаружить');
+  if (err instanceof Conflict) {
+    return res.status(409).json({ message: err.message });
+  }
 });
 app.use(errorLogger);
 app.use(errors());
