@@ -39,7 +39,7 @@ const getUserById = async (req, res, next) => {
 };
 
 // возвращает либо Promise с пользователем, либо Promise с null
-const getUserByEmail = async (email) => User.findOne({ email });
+// const getUserByEmail = async (email) => User.findOne({ email });
 
 const createUser = async (registrationUserDto) => {
   const {
@@ -93,7 +93,7 @@ const registration = async (req, res, next) => {
 
     return res.status(CREATED).json(formatedCreatedUser);
   } catch (error) {
-     if (error.name === 'ValidationError') {
+    if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
     }
     return next(error);

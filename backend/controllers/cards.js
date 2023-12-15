@@ -3,8 +3,6 @@ const { SUCCESS, CREATED } = require('../constans/codes');
 const BadRequest = require('../errors/BadRequest');
 const Forbidden = require('../errors/Forbidden');
 const NotFound = require('../errors/NotFound');
-const Internal = require('../errors/Internal');
-
 
 const getCards = (req, res, next) => {
   Card.find()
