@@ -74,28 +74,26 @@ const getFormattedUser = (user) => {
     password: jsonUser.password,
   };
 };
+// const { email } = req.body;
 
+// if (!email) throw new BadRequest('Email обязателен');
 const registration = async (req, res, next) => {
   try {
-    // const { email } = req.body;
-
-    // if (!email) throw new BadRequest('Email обязателен');
-
     // const foundUser = await getUserByEmail(email);
 
     // if (foundUser !== null) {
     //   return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
     // }
-
     const createdUser = await createUser(req.body);
     const { password, ...formatedCreatedUser } = getFormattedUser(createdUser);
 
     return res.status(CREATED).json(formatedCreatedUser);
   } catch (error) {
-    if (error.name === 'ValidationError') {
+     if (err.code === 11000) {
+      next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
+    } if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
     }
-    // if (!error.message) return next(new BadRequest('Произошла ошибка'));
     return next(error);
   }
 };
