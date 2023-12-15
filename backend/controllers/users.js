@@ -91,6 +91,8 @@ const registration = async (req, res, next) => {
   } catch (error) {
      if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
+    } if (err.code === 11000) {
+      next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
     }
     return next(error);
   }
