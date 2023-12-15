@@ -80,9 +80,14 @@ const getFormattedUser = (user) => {
 const registration = async (req, res, next) => {
   try {
     const { email } = req.body;
-    const foundUser = await getUserByEmail(email);
+    // const foundUser = await getUserByEmail(email);
 
-    if (foundUser !== null) {
+    // if (foundUser !== null) {
+    //   return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
+    // }
+    const user = await User.findOne({ email }).select('+password');
+
+    if (user !== null) {
       return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
     }
     const createdUser = await createUser(req.body);
@@ -90,7 +95,7 @@ const registration = async (req, res, next) => {
 
     return res.status(CREATED).json(formatedCreatedUser);
   } catch (error) {
-    if (error.name === 'ValidationError') {
+     if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
     }
     return next(error);
