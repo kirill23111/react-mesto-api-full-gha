@@ -29,7 +29,7 @@ const deleteCardById = async (req, res, next) => {
   try {
     const { cardId } = req.params;
     const userId = req.user.id;
-    const card = await Card.findById(cardId).populate(owner);
+    const card = await Card.findById(cardId);
 
     if (card === null) {
       return next(new NotFound('Карточка не найдена'));
@@ -55,7 +55,7 @@ const handleLikeDislike = async (req, res, next, update) => {
       cardId,
       update,
       { new: true },
-    ).populate([owner, likes]);
+    );
 
     if (!card) {
       return next(new NotFound('Карточка не найдена'));
@@ -76,6 +76,7 @@ const handleLikeDislike = async (req, res, next, update) => {
 };
 
 const likeCard = (req, res, next) => {
+  console.log(req.user);
   handleLikeDislike(req, res, next, { $addToSet: { likes: req.user.id } });
 };
 
