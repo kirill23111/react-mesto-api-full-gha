@@ -93,7 +93,7 @@ const registration = async (req, res, next) => {
     return res.status(CREATED).json(formatedCreatedUser);
   } catch (error) {
     if (error.name === 'ValidationError') {
-      return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
+      return next(new BadRequest('Ошибка валидации'));
     }
     // if (!error.message) return next(new BadRequest('Произошла ошибка'));
     return next(error);
@@ -164,9 +164,9 @@ const updateProfile = (req, res, next) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequest('Некорректные данные'));
       }
-      if (err.name === 'CastError') {
-        return next(new BadRequest('Передается невалидный id'));
-      }
+      // if (err.name === 'CastError') {
+      //   return next(new BadRequest('Передается невалидный id'));
+      // }
       return next(err);
     });
 };
@@ -182,9 +182,9 @@ const updateAvatar = async (req, res, next) => {
     }
 
     // Проверяем, совпадает ли новый аватар с текущим
-    if (avatar === findedUser.avatar) {
-      return res.status(SUCCESS).json(findedUser);
-    }
+    // if (avatar === findedUser.avatar) {
+    //   return res.status(SUCCESS).json(findedUser);
+    // }
 
     // Обновляем аватар пользователя
     const updatedUser = await User.findByIdAndUpdate(
