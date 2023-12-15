@@ -3,11 +3,18 @@ const { SUCCESS, CREATED } = require('../constans/codes');
 const BadRequest = require('../errors/BadRequest');
 const Forbidden = require('../errors/Forbidden');
 const NotFound = require('../errors/NotFound');
+const Internal = require('../errors/Internal');
 
+
+// const getCards = (req, res, next) => {
+//   Card.find()
+//     .then((cards) => res.status(SUCCESS).json(cards))
+//     .catch((error) => next(error));
+// };
 const getCards = (req, res, next) => {
   Card.find()
     .then((cards) => res.status(SUCCESS).json(cards))
-    .catch((error) => next(error));
+    .catch((error) => next(new Internal(`Произошла ошибка при получении карточек: ${error.message}`)));
 };
 
 const createCard = async (req, res, next) => {
