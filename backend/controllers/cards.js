@@ -76,7 +76,6 @@ const handleLikeDislike = async (req, res, next, update) => {
 };
 
 const likeCard = (req, res, next) => {
-  console.log(req.user);
   handleLikeDislike(req, res, next, { $addToSet: { likes: req.user.id } });
 };
 

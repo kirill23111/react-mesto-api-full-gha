@@ -36,7 +36,8 @@ function App() {
 
   useEffect(() => {
     if (!isLoggedIn) return;
-    Promise.all([api.getUser(), api.getInitialCards()])
+
+    Promise.all([api.getUser(), api.getCards()])
       .then(([user, cards]) => {
         setCurrentUser(user);
         setCards(cards);
@@ -51,49 +52,38 @@ function App() {
   
     if (!token || token === null) {
       setIsLoggedIn(false);
-  
       return;
-    } else {
-      auth
-        .checkToken(token)
-        .then((user) => {
-          setEmail(user.email);
-          setIsLoggedIn(true);
-                  Promise.all([api.getUser(), api.getInitialCards()])
-          .then(([user, cards]) => {
-            setCurrentUser(user);
-            setCards(cards);
-          })
-          navigate('/');
-        })
-        .catch((err) => {
-          console.error(err);
-          setIsLoggedIn(false);
-        });
     }
+
+    auth
+      .checkToken(token)
+      .then((user) => {
+        setEmail(user.email);
+        setIsLoggedIn(true);
+        navigate('/');
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsLoggedIn(false);
+      });
+    
   }, [navigate]);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      (async () => {
-        try {
-          const cards = await api.getInitialCards();
-          setCards(cards);
-        } catch (e) {
-          console.log(e.message);
-        }
-      })();
-    }
-  }, [isLoggedIn]);
+
+    // console.log(cards);
+
+  }, [cards]);
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((like) => like._id === currentUser._id);
+    const isLiked = card.likes.some((like) => like === currentUser._id);
+
     if (!isLiked) {
       api
         .likeCard(card._id)
         .then((newCard) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
+            state.map((stateCard) => (stateCard._id === card._id ? newCard : stateCard))
           );
         })
         .catch((err) => {
@@ -104,7 +94,7 @@ function App() {
         .dislikeCard(card._id)
         .then((newCard) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
+            state.map((stateCard) => (stateCard._id === card._id ? newCard : stateCard))
           );
         })
         .catch((err) => {

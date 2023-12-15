@@ -1,21 +1,12 @@
 import { useContext, useState, useEffect } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
+import api from '../utils/api';
 
 function EditProfilePopup({ onUpdateUser, onClose, isOpen }) {
-  // const [name, setName] = React.useState('');
-  // const [description, setDescription] = React.useState('');
-  // const currentUser = useContext(CurrentUserContext);
-  // // const [name, setName] = useState(currentUser.name);
-  // // const [description, setDescription] = useState(currentUser.about);
-
-  // useEffect(() => {
-  //   setName(currentUser.name);
-  //   setDescription(currentUser.about);
-  // }, [currentUser]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = api.getCurrentUser();
 
   useEffect(() => {
     if (isOpen) {

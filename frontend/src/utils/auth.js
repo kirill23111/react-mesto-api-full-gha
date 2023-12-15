@@ -46,5 +46,10 @@ export const checkToken = async (token) => {
       "Content-Type": "application/json",
       [api.keyJwtLocalStorage]: token,
     },
-  }).then(getResponse)
+  })
+  .then(getResponse)
+  .then(response => {
+    api.setCurrentUser(response);
+    return response;
+  });
 };

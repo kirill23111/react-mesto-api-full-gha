@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
 import Card from "./Card";
+import api from '../utils/api.js';
 
 function Main({
   cards,
@@ -11,7 +12,7 @@ function Main({
   onCardDelete,
   onCardLike,
 }) {
-  const user = useContext(CurrentUserContext);
+  const user = api.getCurrentUser();
 
   return (
     <main>

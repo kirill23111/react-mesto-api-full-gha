@@ -1,5 +1,6 @@
 class Api {
   keyJwtLocalStorage = 'jwt';
+  _user = null;
 
   constructor({ url, headers }) {
     this._baseUrl = url;
@@ -12,6 +13,14 @@ class Api {
       localStorage.setItem(this.keyJwtLocalStorage, JSON.stringify(token));
     }
     this._headers[this.keyJwtLocalStorage] = token;
+  }
+
+  setCurrentUser(user) {
+    this._user = user;
+  }
+
+  getCurrentUser() {
+    return this._user;
   }
 
   deleteJwtToken() {
@@ -30,7 +39,7 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  async getInitialCards() {
+  async getCards() {
     const res = await fetch(`${this._baseUrl}/cards`, {
       method: "GET",
       headers: this._headers,
