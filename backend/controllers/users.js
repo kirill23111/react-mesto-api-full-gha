@@ -79,19 +79,20 @@ const getFormattedUser = (user) => {
 // if (!email) throw new BadRequest('Email обязателен');
 const registration = async (req, res, next) => {
   try {
+    const foundUser = await getUserByEmail(email);
+
+    if (foundUser !== null) {
+      return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
+    }
     const createdUser = await createUser(req.body);
     const { password, ...formatedCreatedUser } = getFormattedUser(createdUser);
 
     return res.status(CREATED).json(formatedCreatedUser);
   } catch (error) {
-    if (error.name === 'ValidationError') {
+     if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
-    } else if (error.name === 'MongoError' && error.code === 11000) {
-      // Обработка ошибки MongoDB Duplicate Key (код 11000)
-      return next(new Conflict(`Пользователь с таким Email ${req.body.email} уже существует`));
-    } else {
-      return next(error);
     }
+    return next(error);
   }
 };
 

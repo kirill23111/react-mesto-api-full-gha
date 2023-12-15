@@ -61,11 +61,8 @@ db.once('open', () => {
   console.log(`Подключено к MongoDB! MONGO_URL = ${MONGO_URL}`);
 });
 
-app.use(authMiddleware, (req, res) => {
+app.use(authMiddleware, (req, res, err, next) => {
   if (res.headersSent === false) throw new NotFound('Не удалось обнаружить');
-  if (err instanceof Conflict) {
-    return res.status(409).json({ message: err.message });
-  }
 });
 app.use(errorLogger);
 app.use(errors());
