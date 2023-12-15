@@ -4,7 +4,7 @@ const Internal = require('../errors/Internal');
 const privateKey = 'your-secret-key';
 const authMiddleware = (req, res, next) => {
   const token =  req.cookies.jwt;
-  // req.headers.jwt ||
+
   if (!token) {
     return next(new Internal('Необходима авторизация'));
   }
