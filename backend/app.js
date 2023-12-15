@@ -58,7 +58,7 @@ db.on('error', (error) => {
 });
 
 db.once('open', () => {
-  console.log('Подключено к MongoDB!');
+  console.log(`Подключено к MongoDB! MONGO_URL = ${MONGO_URL}`);
 });
 
 app.use(authMiddleware, (req, res) => {

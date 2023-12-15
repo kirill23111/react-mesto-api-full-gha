@@ -14,6 +14,11 @@ class Api {
     this._headers[this.keyJwtLocalStorage] = token;
   }
 
+  deleteJwtToken() {
+    localStorage.removeItem(this.keyJwtLocalStorage);
+    delete this._headers[this.keyJwtLocalStorage];
+  }
+
   getJwtToken() {
     return this._headers[this.keyJwtLocalStorage];
   }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate  } from "react-router-dom";
 import api from "../utils/api";
 import * as auth from "../utils/auth";
 import Header from "../components/Header.js";
@@ -16,6 +16,8 @@ import ProtectedRoute from "./ProtectedRoute.js";
 import InfoTooltip from "./InfoTooltip";
 
 function App() {
+  const navigate = useNavigate();
+
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [infoTooltipData, setInfoTooltipData] = useState({
@@ -29,6 +31,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [email, setEmail] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(null);
+
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
@@ -45,9 +48,10 @@ function App() {
 
   useEffect(() => {
     const token = api.getJwtToken();
-
+  
     if (!token || token === null) {
       setIsLoggedIn(false);
+  
       return;
     } else {
       auth
@@ -55,13 +59,19 @@ function App() {
         .then((user) => {
           setEmail(user.email);
           setIsLoggedIn(true);
+                  Promise.all([api.getUser(), api.getInitialCards()])
+          .then(([user, cards]) => {
+            setCurrentUser(user);
+            setCards(cards);
+          })
+          navigate('/');
         })
         .catch((err) => {
           console.error(err);
           setIsLoggedIn(false);
         });
     }
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -178,9 +188,11 @@ function App() {
   }
 
   function handleLogout() {
-    setCurrentUser(null);
     setIsLoggedIn(false);
-    localStorage.clear();
+    setCurrentUser(null);
+    setCards([]);
+    api.deleteJwtToken();
+    navigate('/login');
   }
 
   function handleLogin({ email, password }) {
@@ -193,6 +205,7 @@ function App() {
 
       setEmail(email);
       setIsLoggedIn(true);
+      navigate('/');
     });
   }
 
@@ -208,7 +221,6 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <BrowserRouter>
           <Header
             email={email}
             isLoggedIn={isLoggedIn}
@@ -250,7 +262,6 @@ function App() {
               }
             />
           </Routes>
-        </BrowserRouter>
 
         <Footer />
         <EditAvatarPopup

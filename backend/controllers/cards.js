@@ -6,7 +6,7 @@ const NotFound = require('../errors/NotFound');
 const Internal = require('../errors/Internal');
 
 const getCards = (req, res, next) => {
-  Card.find()
+  Card.find().populate([owner, likes])
     .then((cards) => res.status(SUCCESS).json(cards))
     .catch((error) => next(new Internal(`Произошла ошибка при получении карточек: ${error.message}`)));
 };
@@ -29,7 +29,7 @@ const deleteCardById = async (req, res, next) => {
   try {
     const { cardId } = req.params;
     const userId = req.user.id;
-    const card = await Card.findById(cardId);
+    const card = await Card.findById(cardId).populate(owner);
 
     if (card === null) {
       return next(new NotFound('Карточка не найдена'));
@@ -55,7 +55,7 @@ const handleLikeDislike = async (req, res, next, update) => {
       cardId,
       update,
       { new: true },
-    );
+    ).populate([owner, likes]);
 
     if (!card) {
       return next(new NotFound('Карточка не найдена'));
