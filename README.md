@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес <158.160.137.249>
+IP 158.160.137.249
 
 Frontend https://mestoproject.nomoredomainsmonster.ru
 
