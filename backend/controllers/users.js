@@ -79,6 +79,7 @@ const getFormattedUser = (user) => {
 // if (!email) throw new BadRequest('Email обязателен');
 const registration = async (req, res, next) => {
   try {
+    const { email } = req.body;
     const foundUser = await getUserByEmail(email);
 
     if (foundUser !== null) {
