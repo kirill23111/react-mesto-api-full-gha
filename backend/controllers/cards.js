@@ -8,7 +8,7 @@ const Internal = require('../errors/Internal');
 const getCards = (req, res, next) => {
   Card.find()
     .then((cards) => res.status(SUCCESS).json(cards))
-    .catch((error) => next(new Internal(`Произошла ошибка при получении карточек: ${error.message}`)));
+    .catch((error) => next(error));
 };
 
 const createCard = async (req, res, next) => {
