@@ -53,6 +53,12 @@ app.post(
   login,
 );
 
+app.use((err, req, res, next) => {
+  console.error('Произошла какая-то ошибка');
+
+  // Отправка ответа с кодом ошибки клиенту
+});
+
 db.on('error', (error) => {
   console.error('Ошибка подключения к MongoDB:', error);
 });
@@ -68,6 +74,10 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+function listenServer() {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+
+listenServer();
