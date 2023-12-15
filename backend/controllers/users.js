@@ -93,7 +93,7 @@ const registration = async (req, res, next) => {
     return res.status(CREATED).json(formatedCreatedUser);
   } catch (error) {
     if (error.name === 'ValidationError') {
-      return next(new BadRequest('Ошибка валидации'));
+      return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
     }
     // if (!error.message) return next(new BadRequest('Произошла ошибка'));
     return next(error);
