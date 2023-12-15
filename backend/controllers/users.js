@@ -195,9 +195,9 @@ const updateAvatar = async (req, res, next) => {
 
     return res.status(SUCCESS).json(updatedUser);
   } catch (error) {
-    if (error instanceof NotFound) {
-      return next(error);
-    }
+    // if (error instanceof NotFound) {
+    //   return next(error);
+    // }
 
     if (error.name === 'ValidationError') {
       return next(new BadRequest('Произошла ошибка'));
@@ -216,9 +216,9 @@ const getCurrentUser = async (req, res, next) => {
 
     return res.json(findedUser);
   } catch (error) {
-    if (error.name === 'ValidationError') {
-      return next(new BadRequest('Ошибка валидации'));
-    }
+    // if (error.name === 'ValidationError') {
+    //   return next(new BadRequest('Ошибка валидации'));
+    // }
     if (!error.message) return next(new NotFound('Произошла ошибка'));
     return next(error);
   }
