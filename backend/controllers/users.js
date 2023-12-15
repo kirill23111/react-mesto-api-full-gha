@@ -90,7 +90,7 @@ const registration = async (req, res, next) => {
 
     return res.status(CREATED).json(formatedCreatedUser);
   } catch (error) {
-     if (error.name === 'ValidationError') {
+    if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
     }
     return next(error);
