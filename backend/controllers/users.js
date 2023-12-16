@@ -117,11 +117,11 @@ const login = async (req, res, next) => {
     });
 
     return res
-      .cookie('jwt', jwtToken, {
-        httpOnly: true,
-        sameSite: true,
-        maxAge: 3600000 * 24 * 7,
-      })
+      // .cookie('jwt', jwtToken, {
+      //   httpOnly: true,
+      //   sameSite: true,
+      //   maxAge: 3600000 * 24 * 7,
+      // })
       .header('jwt', jwtToken)
       .send({ jwt: jwtToken });
   } catch (error) {
