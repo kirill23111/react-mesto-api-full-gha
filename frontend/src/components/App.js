@@ -120,7 +120,6 @@ function App() {
       .updateUserInfo(items)
       .then((user) => {
         setCurrentUser(user);
-        // console.log(user);
         setIsEditProfilePopupOpen(true);
         closeAllPopups();
       })

@@ -57,7 +57,14 @@ class Api {
         name,
         about,
       }),
-    }).then(this._checkResponse);
+    })
+    .then(this._checkResponse)
+    .then((response) => {
+      const { name, about } = response;
+      this._setNameAndAboutToUser(name, about);
+      return response;
+    })
+    ;
   }
 
   createCard({ link, name }) {
@@ -84,7 +91,14 @@ class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ avatar }),
-    }).then(this._checkResponse);
+    })
+    .then(this._checkResponse)
+    .then(response => {
+      const { avatar } = response;
+      this._setAvatarToUser(avatar);
+      return response;
+    })
+    ;
   }
 
   likeCard(cardId) {
@@ -99,6 +113,21 @@ class Api {
       method: "DELETE",
       headers: this._headers,
     }).then(this._checkResponse);
+  }
+
+  _setNameAndAboutToUser(name, about) {
+    this._user = {
+      ...this._user,
+      name: name,
+      about: about
+    };
+  }
+
+  _setAvatarToUser(avatar) {
+    this._user = {
+      ...this._user,
+      avatar: avatar
+    };
   }
 
   _checkResponse(res) {
