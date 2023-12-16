@@ -20,6 +20,7 @@ const getUsers = async (req, res, next) => {
     return next(error);
   }
 };
+
 // Контроллер для получения пользователя по id
 const getUserById = async (req, res, next) => {
   try {
