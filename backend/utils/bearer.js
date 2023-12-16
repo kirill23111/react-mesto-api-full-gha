@@ -9,5 +9,5 @@ function extractBearerToken(inputString) {
 }
 
 module.exports = {
-  extractBearerToken
+  extractBearerToken,
 };

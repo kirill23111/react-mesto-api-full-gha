@@ -15,5 +15,5 @@ const generateJwtToken = (obj) => {
 module.exports = {
   generateJwtToken,
   jwtKey,
-  JWT_SECRET
+  JWT_SECRET,
 };
