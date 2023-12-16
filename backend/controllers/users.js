@@ -156,9 +156,6 @@ const updateProfile = (req, res, next) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequest('Некорректные данные'));
       }
-      // if (err.name === 'CastError') {
-      //   return next(new BadRequest('Передается невалидный id'));
-      // }
       return next(err);
     });
 };
@@ -167,16 +164,10 @@ const updateAvatar = async (req, res, next) => {
   try {
     const { avatar } = req.body;
 
-    // Проверяем существование пользователя перед обновлением
     const findedUser = await User.findById(req.user.id);
     if (findedUser === null) {
       throw new NotFound('Пользователь не найден');
     }
-
-    // Проверяем, совпадает ли новый аватар с текущим
-    // if (avatar === findedUser.avatar) {
-    //   return res.status(SUCCESS).json(findedUser);
-    // }
 
     // Обновляем аватар пользователя
     const updatedUser = await User.findByIdAndUpdate(
@@ -187,10 +178,6 @@ const updateAvatar = async (req, res, next) => {
 
     return res.status(SUCCESS).json(updatedUser);
   } catch (error) {
-    // if (error instanceof NotFound) {
-    //   return next(error);
-    // }
-
     if (error.name === 'ValidationError') {
       return next(new BadRequest('Произошла ошибка'));
     }
