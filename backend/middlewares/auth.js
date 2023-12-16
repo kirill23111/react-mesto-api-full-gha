@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken');
 const Internal = require('../errors/Internal');
-// const { privateKey } = require('../constans/keys');
 const { JWT_SECRET, jwtKey } = require('../constans/jwt');
 const { extractBearerToken } = require('../utils/bearer');
 
 const authMiddleware = (req, res, next) => {
-  const token = extractBearerToken(req.headers[jwtKey]);
+  const token = extractBearerToken(
+    req.headers[jwtKey] || req.cookies[jwtKey]
+  );
 
   console.log(token);
 

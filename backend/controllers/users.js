@@ -117,11 +117,11 @@ const login = async (req, res, next) => {
     });
 
     return res
-      // .cookie('jwt', jwtToken, {
-      //   httpOnly: true,
-      //   sameSite: true,
-      //   maxAge: 3600000 * 24 * 7,
-      // })
+      .cookie([jwtKey], `Bearer ${jwtToken}`, {
+        httpOnly: true,
+        sameSite: true,
+        maxAge: 3600000 * 24 * 7,
+      })
       .send({ [jwtKey]: `Bearer ${jwtToken}` });
   } catch (error) {
     if (error.name === 'ValidationError') {
