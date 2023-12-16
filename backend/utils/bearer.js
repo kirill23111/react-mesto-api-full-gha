@@ -1,8 +1,7 @@
 function extractBearerToken(inputString) {
-  console.log(inputString, 'inputString');
+  if (!inputString) return null;
   const strArr = inputString.split(' ');
 
-  console.log(strArr, 'strArr');
   if (strArr[0] === 'Bearer') {
     return strArr[1];
   }
