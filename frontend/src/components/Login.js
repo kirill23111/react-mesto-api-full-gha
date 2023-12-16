@@ -31,7 +31,7 @@ const Login = ({ handleLogin, handleOpenInfoTooltip }) => {
           message: "Вы успешно залогинились!",
         });
       }).catch((error) => {
-        console.log(error)
+        console.error(error)
         return handleOpenInfoTooltip({
           success: false,
           message: "Что-то пошло не так! Попробуйте ещё раз.",

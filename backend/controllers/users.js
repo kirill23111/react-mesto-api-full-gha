@@ -117,12 +117,11 @@ const login = async (req, res, next) => {
     });
 
     return res
-      // .cookie('jwt', jwtToken, {
-      //   httpOnly: true,
-      //   sameSite: true,
-      //   maxAge: 3600000 * 24 * 7,
-      // })
-      .header('jwt', jwtToken)
+      .cookie('jwt', jwtToken, {
+        httpOnly: true,
+        sameSite: true,
+        maxAge: 3600000 * 24 * 7,
+      })
       .send({ jwt: jwtToken });
   } catch (error) {
     if (error.name === 'ValidationError') {
@@ -202,7 +201,6 @@ const updateAvatar = async (req, res, next) => {
 
 const getCurrentUser = async (req, res, next) => {
   try {
-    console.log(req.user);
     const reqUserId = req.user.id;
     const findedUser = await User.findById(reqUserId).lean();
 

@@ -43,7 +43,7 @@ function App() {
         setCards(cards);
       })
       .catch((err) => {
-        console.log(`Ошибка: ${err}`);
+        console.error(`Ошибка: ${err}`);
       });
   }, [isLoggedIn]);
 
@@ -68,12 +68,6 @@ function App() {
       });
     
   }, [navigate]);
-
-  useEffect(() => {
-
-    // console.log(cards);
-
-  }, [cards]);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((like) => like === currentUser._id);
@@ -111,7 +105,7 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -124,7 +118,7 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -137,7 +131,7 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -150,7 +144,7 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
 

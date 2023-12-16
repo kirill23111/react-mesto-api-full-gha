@@ -1,6 +1,20 @@
+import { Cookie } from "./cookie";
+
 class Api {
   keyJwtLocalStorage = 'jwt';
+  _sentHeaderJwt = false;
+  _sentCookieJwt = true;
   _user = null;
+  _cookies = {};
+
+  get headers() {
+    const headers = { ...this._headers };
+
+    if (this._sentCookieJwt === false) delete headers['Cookie'];
+    if (this._sentHeaderJwt === false) delete headers[this.keyJwtLocalStorage];
+
+    return headers;
+  }
 
   constructor({ url, headers }) {
     this._baseUrl = url;
@@ -13,6 +27,8 @@ class Api {
       localStorage.setItem(this.keyJwtLocalStorage, JSON.stringify(token));
     }
     this._headers[this.keyJwtLocalStorage] = token;
+    this._headers['Cookie'] = Cookie.stringify({ [this.keyJwtLocalStorage]: token });
+    this._cookies[this.keyJwtLocalStorage] = token;
   }
 
   setCurrentUser(user) {
@@ -26,6 +42,8 @@ class Api {
   deleteJwtToken() {
     localStorage.removeItem(this.keyJwtLocalStorage);
     delete this._headers[this.keyJwtLocalStorage];
+    delete this._headers['Cookie'];
+    delete this._cookies[this.keyJwtLocalStorage];
   }
 
   getJwtToken() {
@@ -35,14 +53,14 @@ class Api {
   getUser() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
-      headers: this._headers,
+      headers: this.headers,
     }).then(this._checkResponse);
   }
 
   async getCards() {
     const res = await fetch(`${this._baseUrl}/cards`, {
       method: "GET",
-      headers: this._headers,
+      headers: this.headers,
     });
 
     return await this._checkResponse(res);
@@ -51,7 +69,7 @@ class Api {
   updateUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me/`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: this.headers,
 
       body: JSON.stringify({
         name,
@@ -70,7 +88,7 @@ class Api {
   createCard({ link, name }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: this.headers,
       body: JSON.stringify({
         link,
         name,
@@ -81,15 +99,14 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: this.headers,
     }).then(this._checkResponse);
   }
 
   updateUserAvatar({ avatar }) {
-    console.log({ avatar });
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: this.headers,
       body: JSON.stringify({ avatar }),
     })
     .then(this._checkResponse)
@@ -104,14 +121,14 @@ class Api {
   likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
-      headers: this._headers,
+      headers: this.headers,
     }).then(this._checkResponse);
   }
 
   dislikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: this.headers,
     }).then(this._checkResponse);
   }
 
@@ -157,6 +174,7 @@ class Api {
 const api = new Api({
   url: "https://api.mestoproject.nomoredomainsmonster.ru",
   headers: {
+    "Accept": "application/json",
     "Content-Type": "application/json",
   },
 });
