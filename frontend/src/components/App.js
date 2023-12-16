@@ -37,7 +37,7 @@ function App() {
   useEffect(() => {
     if (!isLoggedIn) return;
 
-    Promise.all([api.getUser(), api.getCards()])
+    Promise.all([api.getUser(localStorage.jwt), api.getCards(localStorage.jwt)])
       .then(([user, cards]) => {
         setCurrentUser(user);
         setCards(cards);
@@ -74,7 +74,7 @@ function App() {
 
     if (!isLiked) {
       api
-        .likeCard(card._id)
+        .likeCard(card._id, localStorage.jwt)
         .then((newCard) => {
           setCards((state) =>
             state.map((stateCard) => (stateCard._id === card._id ? newCard : stateCard))
@@ -85,7 +85,7 @@ function App() {
         });
     } else {
       api
-        .dislikeCard(card._id)
+        .dislikeCard(card._id, localStorage.jwt)
         .then((newCard) => {
           setCards((state) =>
             state.map((stateCard) => (stateCard._id === card._id ? newCard : stateCard))
@@ -99,7 +99,7 @@ function App() {
 
   function handleCardDelete(card) {
     api
-      .deleteCard(card._id)
+      .deleteCard(card._id, localStorage.jwt)
       .then(() => {
         setCards((cards) => cards.filter((item) => item._id !== card._id));
         closeAllPopups();
@@ -111,7 +111,7 @@ function App() {
 
   function handleUpdateUser(items) {
     api
-      .updateUserInfo(items)
+      .updateUserInfo(items, localStorage.jwt)
       .then((user) => {
         setCurrentUser(user);
         setIsEditProfilePopupOpen(true);
@@ -124,7 +124,7 @@ function App() {
 
   function handleUpdateAvatar(avatar) {
     api
-      .updateUserAvatar(avatar)
+      .updateUserAvatar(avatar, localStorage.jwt)
       .then((user) => {
         setCurrentUser(user);
         setIsEditAvatarPopupOpen(true);
@@ -137,7 +137,7 @@ function App() {
 
   function handleAddPlaceSubmit(items) {
     api
-      .createCard(items)
+      .createCard(items, localStorage.jwt)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         setIsAddPlacePopupOpen(true);

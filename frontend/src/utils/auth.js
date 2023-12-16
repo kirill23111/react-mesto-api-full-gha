@@ -37,6 +37,7 @@ export const checkToken = async (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: api.headers,
+    Authorization: `Bearer ${token}`,
     credentials: api.credentials
   })
   .then(getResponse)

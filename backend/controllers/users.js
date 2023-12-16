@@ -110,19 +110,19 @@ const login = async (req, res, next) => {
 
     if (passwordResult === false) throw new Internal('Неправильный пароль');
 
-    const jwtToken = generateJwtToken({
+    const token = generateJwtToken({
       id: user.id,
       email,
       password: user.password,
     });
 
     return res
-      .cookie([jwtKey], `Bearer ${jwtToken}`, {
+      .cookie([jwtKey], `Bearer ${token}`, {
         httpOnly: true,
         sameSite: true,
         maxAge: 3600000 * 24 * 7,
       })
-      .send({ [jwtKey]: `Bearer ${jwtToken}` });
+      .send({ [jwtKey]: `Bearer ${token}` });
   } catch (error) {
     if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
