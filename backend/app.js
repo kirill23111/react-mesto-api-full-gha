@@ -25,7 +25,7 @@ mongoose.connect(MONGO_URL);
 const db = mongoose.connection;
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://mestoproject.nomoredomainsmonster.ru'],
+  origin: 'http://localhost:3000',
   credentials: true
 }));
 app.use(express.json());
