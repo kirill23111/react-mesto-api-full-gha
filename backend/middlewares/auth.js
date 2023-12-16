@@ -8,7 +8,7 @@ const authMiddleware = (req, res, next) => {
   console.log(req.headers[jwtKey]);
 
   const getToken = () => {
-    const token = req.headers[jwtKey].split(' ');
+    const token = req.headers[jwtKey];
     if (token) return extractBearerToken(token);
     return null;
   };
