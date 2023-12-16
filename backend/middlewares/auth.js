@@ -4,6 +4,7 @@ const Internal = require('../errors/Internal');
 const { JWT_SECRET, jwtKey } = require('../constans/jwt');
 
 const authMiddleware = (req, res, next) => {
+  console.log(req.headers);
   const token = req.headers[jwtKey];
 
   if (!token) {
