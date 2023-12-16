@@ -1,9 +1,9 @@
 import { Cookie } from "./cookie";
 
 class Api {
-  keyJwtLocalStorage = 'jwt';
-  _sentHeaderJwt = false;
-  _sentCookieJwt = true;
+  keyJwtLocalStorage = 'token';
+  _sentHeaderJwt = true;
+  _sentCookieJwt = false;
   _user = null;
   _cookies = {};
 

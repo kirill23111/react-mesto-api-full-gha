@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const jwtKey = 'token';
 
 const generateJwtToken = (obj) => {
   const token = jwt.sign(obj, JWT_SECRET, {
@@ -11,4 +12,8 @@ const generateJwtToken = (obj) => {
   return token;
 };
 
-module.exports = generateJwtToken;
+module.exports = {
+  generateJwtToken,
+  jwtKey,
+  JWT_SECRET
+};

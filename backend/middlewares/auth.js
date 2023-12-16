@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
 const Internal = require('../errors/Internal');
 // const { privateKey } = require('../constans/keys');
-const privateKey = 'your-secret-key';
+const { JWT_SECRET, jwtKey } = require('../constans/jwt');
+
 const authMiddleware = (req, res, next) => {
-  const token = req.cookies.jwt;
+  const token = req.headers[jwtKey];
 
   if (!token) {
     return next(new Internal('Необходима авторизация'));
@@ -11,7 +12,7 @@ const authMiddleware = (req, res, next) => {
 
   try {
     // Верификация токена
-    const { iat, exp, ...payload } = jwt.verify(token, privateKey);
+    const { iat, exp, ...payload } = jwt.verify(token, JWT_SECRET);
 
     // Добавляем payload в объект запроса
     req.user = payload;

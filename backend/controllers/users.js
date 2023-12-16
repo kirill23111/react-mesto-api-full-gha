@@ -1,6 +1,6 @@
 // const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const generateJwtToken = require('../constans/jwt');
+const { jwtKey, generateJwtToken } = require('../constans/jwt');
 const User = require('../models/user'); // Путь к файлу с моделью пользователя
 // const authMiddleware = require('../middlewares/auth');
 const {
@@ -117,12 +117,12 @@ const login = async (req, res, next) => {
     });
 
     return res
-      .cookie('jwt', jwtToken, {
-        httpOnly: true,
-        sameSite: 'none',
-        maxAge: 3600000 * 24 * 7,
-      })
-      .send({ jwt: jwtToken });
+      // .cookie('jwt', jwtToken, {
+      //   httpOnly: true,
+      //   sameSite: true,
+      //   maxAge: 3600000 * 24 * 7,
+      // })
+      .send({ [jwtKey]: jwtToken });
   } catch (error) {
     if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
