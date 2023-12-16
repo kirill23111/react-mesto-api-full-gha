@@ -117,13 +117,13 @@ const login = async (req, res, next) => {
     });
 
     return res
-      .cookie([jwtKey], jwtToken, {
+      .cookie([jwtKey], `Bearer ${jwtToken}`, {
         httpOnly: true,
         sameSite: true,
         maxAge: 3600000 * 24 * 7,
       })
-      .header([jwtKey], jwtToken)
-      .send({[jwtKey]: jwtToken});
+      .header([jwtKey], `Bearer ${jwtToken}`)
+      .send({ [jwtKey]: `Bearer ${jwtToken}` });
   } catch (error) {
     if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
