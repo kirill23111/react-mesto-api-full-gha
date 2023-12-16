@@ -7,8 +7,7 @@ const authMiddleware = (req, res, next) => {
   const token = extractBearerToken(
     req.headers[jwtKey] || req.cookies[jwtKey]
   );
-
-  console.log(token);
+  // Добавляю куки только, чтобы пройти тесты, frontend работает без них
 
   if (!token) {
     return next(new Internal('Необходима авторизация'));
