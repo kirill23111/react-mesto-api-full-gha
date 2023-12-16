@@ -5,7 +5,8 @@ const { JWT_SECRET, jwtKey } = require('../constans/jwt');
 const { extractBearerToken } = require('../utils/bearer');
 
 const authMiddleware = (req, res, next) => {
-  console.log(req.headers);
+  console.log(req.headers[jwtKey]);
+
   const getToken = () => {
     const token = req.headers[jwtKey].split(' ');
     if (token) {
@@ -13,6 +14,8 @@ const authMiddleware = (req, res, next) => {
     }
   };
   const token = getToken();
+
+  console.log(token);
 
   if (!token) {
     return next(new Internal('Необходима авторизация'));
