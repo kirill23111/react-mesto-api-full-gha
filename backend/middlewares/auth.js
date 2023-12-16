@@ -6,6 +6,7 @@ const { extractBearerToken } = require('../utils/bearer');
 
 const authMiddleware = (req, res, next) => {
   const token = extractBearerToken(req.headers[jwtKey]);
+
   console.log(token);
 
   if (!token) {
