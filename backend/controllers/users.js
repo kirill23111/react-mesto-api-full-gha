@@ -77,23 +77,11 @@ const getFormattedUser = (user) => {
 
 const registration = async (req, res, next) => {
   try {
-    const { email } = req.body;
-    // const foundUser = await getUserByEmail(email);
-
-    // if (foundUser !== null) {
-    //   return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
-    // }
-    // const user = await User.findOne({ email }).select('+password');
-
-    // if (user !== null) {
-    //   return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
-    // }
     const createdUser = await createUser(req.body);
     const { password, ...formatedCreatedUser } = getFormattedUser(createdUser);
 
     return res.status(CREATED).json(formatedCreatedUser);
   } catch (error) {
-
     if (error.code === 11000) {
       return next(new Conflict(`Пользователь с таким Email ${error.keyValue.email} уже существует`));
     }
