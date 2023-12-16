@@ -2,10 +2,17 @@ const jwt = require('jsonwebtoken');
 const Internal = require('../errors/Internal');
 // const { privateKey } = require('../constans/keys');
 const { JWT_SECRET, jwtKey } = require('../constans/jwt');
+const { extractBearerToken } = require('../utils/bearer');
 
 const authMiddleware = (req, res, next) => {
   console.log(req.headers);
-  const token = req.headers[jwtKey];
+  const getToken = () => {
+    const token = req.headers[jwtKey].split(' ');
+    if (token) {
+      return extractBearerToken(token);
+    }
+  };
+  const token = getToken();
 
   if (!token) {
     return next(new Internal('Необходима авторизация'));
