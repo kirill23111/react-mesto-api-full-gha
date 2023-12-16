@@ -83,16 +83,17 @@ const registration = async (req, res, next) => {
     // if (foundUser !== null) {
     //   return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
     // }
-    const user = await User.findOne({ email }).select('+password');
+    // const user = await User.findOne({ email }).select('+password');
 
-    if (user !== null) {
-      return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
-    }
+    // if (user !== null) {
+    //   return next(new Conflict(`Пользователь с таким Email ${email} уже существует`));
+    // }
     const createdUser = await createUser(req.body);
     const { password, ...formatedCreatedUser } = getFormattedUser(createdUser);
 
     return res.status(CREATED).json(formatedCreatedUser);
   } catch (error) {
+    console.log(error);
     if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
     }
