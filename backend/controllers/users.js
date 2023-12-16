@@ -202,6 +202,7 @@ const updateAvatar = async (req, res, next) => {
 
 const getCurrentUser = async (req, res, next) => {
   try {
+    console.log(req.user);
     const reqUserId = req.user.id;
     const findedUser = await User.findById(reqUserId).lean();
 
