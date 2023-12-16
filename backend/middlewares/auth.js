@@ -5,14 +5,7 @@ const { JWT_SECRET, jwtKey } = require('../constans/jwt');
 const { extractBearerToken } = require('../utils/bearer');
 
 const authMiddleware = (req, res, next) => {
-  console.log(req.headers[jwtKey]);
-
-  const getToken = () => {
-    const token = req.headers[jwtKey];
-    if (token) return extractBearerToken(token);
-    return null;
-  };
-  const token = getToken();
+  const token = extractBearerToken(req.headers[jwtKey]);
 
   console.log(token);
 
