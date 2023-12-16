@@ -21,6 +21,7 @@ export const authorize = async (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: api.headers,
+    credentials: api.credentials,
     body: JSON.stringify({ email, password }),
   })
   .then(getResponse)
@@ -36,6 +37,7 @@ export const checkToken = async (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: api.headers,
+    credentials: api.credentials
   })
   .then(getResponse)
   .then(response => {

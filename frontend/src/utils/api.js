@@ -15,6 +15,10 @@ class Api {
 
     return headers;
   }
+  
+  get credentials() {
+    return this._sentCookieJwt ? 'include' : 'same-origin';
+  }
 
   constructor({ url, headers }) {
     this._baseUrl = url;
@@ -54,6 +58,7 @@ class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this.headers,
+      credentials: this.credentials
     }).then(this._checkResponse);
   }
 
@@ -70,7 +75,7 @@ class Api {
     return fetch(`${this._baseUrl}/users/me/`, {
       method: "PATCH",
       headers: this.headers,
-
+      credentials: this.credentials,
       body: JSON.stringify({
         name,
         about,
@@ -89,6 +94,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this.headers,
+      credentials: this.credentials,
       body: JSON.stringify({
         link,
         name,
@@ -100,6 +106,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this.headers,
+      credentials: this.credentials,
     }).then(this._checkResponse);
   }
 
@@ -107,6 +114,7 @@ class Api {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
+      credentials: this.credentials,
       body: JSON.stringify({ avatar }),
     })
     .then(this._checkResponse)
@@ -122,6 +130,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this.headers,
+      credentials: this.credentials,
     }).then(this._checkResponse);
   }
 
@@ -129,6 +138,7 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this.headers,
+      credentials: this.credentials,
     }).then(this._checkResponse);
   }
 
