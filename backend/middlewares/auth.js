@@ -18,6 +18,7 @@ const authMiddleware = (req, res, next) => {
 
     // Добавляем payload в объект запроса
     req.user = payload;
+
     // Вызываем следующий middleware или обработчик маршрута
     return next();
   } catch (error) {
