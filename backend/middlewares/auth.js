@@ -8,6 +8,8 @@ const authMiddleware = (req, res, next) => {
     req.headers[jwtKey],
   );
 
+  console.log(req.headers[jwtKey], 'req.headers[jwtKey]');
+  console.log(token, 'token');
 
   if (!token) {
     return next(new Internal('Необходима авторизация'));
