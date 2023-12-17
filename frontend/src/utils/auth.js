@@ -26,8 +26,8 @@ export const authorize = async (email, password) => {
   })
   .then(getResponse)
   .then(response => {
-    if (api.keyJwtLocalStorage in response) {
-      api.setJwtToken(response[api.keyJwtLocalStorage]);
+    if ('token' in response) {
+      api.setJwtToken(response.token, true, true);
     }
     return response;
   })

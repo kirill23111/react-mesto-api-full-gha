@@ -26,13 +26,16 @@ class Api {
     this._initJwtToken();
   }
 
-  setJwtToken(token, localStorageBool = true) {
+  setJwtToken(token, localStorageBool, isSignIn) {
+    const authorization = `Bearer ${token}`;
+    const value = isSignIn === true ? authorization : token;
+
     if (localStorageBool === true) {
-      localStorage.setItem(this.keyJwtLocalStorage, JSON.stringify(token));
+      localStorage.setItem(this.keyJwtLocalStorage, JSON.stringify(value));
     }
-    this._headers[this.keyJwtLocalStorage] = token;
-    this._headers['Cookie'] = Cookie.stringify({ [this.keyJwtLocalStorage]: token });
-    this._cookies[this.keyJwtLocalStorage] = token;
+    this._headers[this.keyJwtLocalStorage] = value;
+    this._headers['Cookie'] = Cookie.stringify({ [this.keyJwtLocalStorage]: value });
+    this._cookies[this.keyJwtLocalStorage] = value;
   }
 
   setCurrentUser(user) {
@@ -168,7 +171,7 @@ class Api {
     const jwtTokenInLocalStorage = this._getJwtTokenInLocalStorage();
 
     if (jwtTokenInLocalStorage !== null) {
-      this.setJwtToken(jwtTokenInLocalStorage, false);
+      this.setJwtToken(jwtTokenInLocalStorage, false, false);
     }
   }
 
