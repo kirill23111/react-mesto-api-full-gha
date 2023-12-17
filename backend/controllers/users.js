@@ -113,7 +113,7 @@ const login = async (req, res, next) => {
     const jwtToken = generateJwtToken({
       id: user.id,
       email,
-      password: user.password,
+      // password: user.password,
     });
 
     return res
@@ -198,7 +198,7 @@ const getCurrentUser = async (req, res, next) => {
     // if (error.name === 'ValidationError') {
     //   return next(new BadRequest('Ошибка валидации'));
     // }
-    if (!error.message) return next(new NotFound('Произошла ошибка'));
+    // if (!error.message) return next(new NotFound('Произошла ошибка'));
     return next(error);
   }
 };

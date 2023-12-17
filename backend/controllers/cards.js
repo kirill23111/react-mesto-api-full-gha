@@ -62,9 +62,9 @@ const handleLikeDislike = async (req, res, next, update) => {
 
     return res.status(SUCCESS).json(card);
   } catch (error) {
-    if (error instanceof NotFound) {
-      return next(error);
-    }
+    // if (error instanceof NotFound) {
+    //   return next(error);
+    // }
 
     if (error.name === 'CastError') {
       return next(new BadRequest('Передано неверное id карточки'));
