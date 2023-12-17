@@ -5,11 +5,11 @@ const { extractBearerToken } = require('../utils/bearer');
 
 const authMiddleware = (req, res, next) => {
   const authorization = extractBearerToken(
-     req.headers[jwtKey],
+  req.headers[jwtKey],
   );
   // Добавляю куки только, чтобы пройти тесты, frontend работает без них
 
-  if (!token) {
+  if (!authorization) {
     return next(new Internal('Необходима авторизация'));
   }
   const token = authorization.replace('Bearer ', '');
