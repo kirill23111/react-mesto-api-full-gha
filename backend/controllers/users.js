@@ -113,24 +113,15 @@ const login = async (req, res, next) => {
     const jwtToken = generateJwtToken({
       id: user.id,
       email,
-      // password: user.password,
     });
 
-    console.log(jwtToken, 'signin');
-
     return res
-      // .cookie([jwtKey], `Bearer ${jwtToken}`, {
-      //   httpOnly: true,
-      //   sameSite: true,
-      //   maxAge: 3600000 * 24 * 7,
-      // })
-      .header([jwtKey], `Bearer ${jwtToken}`)
+      .header(jwtKey, `Bearer ${jwtToken}`)
       .send({ [jwtKey]: `Bearer ${jwtToken}` });
   } catch (error) {
     if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
     }
-    console.log(error);
     return next(error);
   }
 };
