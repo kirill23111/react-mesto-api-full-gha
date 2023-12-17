@@ -4,16 +4,14 @@ const { JWT_SECRET, jwtKey } = require('../constans/jwt');
 const { extractBearerToken } = require('../utils/bearer');
 
 const authMiddleware = (req, res, next) => {
-  // const token = extractBearerToken(
-  //   req.cookies[jwtKey] || req.headers[jwtKey],
-  // );
+  const token = extractBearerToken(
+    req.cookies[jwtKey] || req.headers[jwtKey],
+  );
   // Добавляю куки только, чтобы пройти тесты, frontend работает без них
-  const { authorization } = req.headers;
-  if (!authorization) {
+
+  if (!token) {
     return next(new Internal('Необходима авторизация'));
   }
-
-  const token = authorization.replace('Bearer ', '');
 
   try {
     // Верификация токена

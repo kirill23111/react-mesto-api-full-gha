@@ -54,30 +54,27 @@ class Api {
     return this._headers[this.keyJwtLocalStorage];
   }
 
-  getUser(token) {
+  getUser() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this.headers,
-      Authorization: `Bearer ${token}`,
       credentials: this.credentials
     }).then(this._checkResponse);
   }
 
-  async getCards(token) {
+  async getCards() {
     const res = await fetch(`${this._baseUrl}/cards`, {
       method: "GET",
       headers: this.headers,
-      Authorization: `Bearer ${token}`,
     });
 
     return await this._checkResponse(res);
   }
 
-  updateUserInfo({ name, about }, token) {
+  updateUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me/`, {
       method: "PATCH",
       headers: this.headers,
-      Authorization: `Bearer ${token}`,
       credentials: this.credentials,
       body: JSON.stringify({
         name,
@@ -93,11 +90,10 @@ class Api {
     ;
   }
 
-  createCard({ link, name }, token) {
+  createCard({ link, name }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this.headers,
-      Authorization: `Bearer ${token}`,
       credentials: this.credentials,
       body: JSON.stringify({
         link,
@@ -106,20 +102,18 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  deleteCard(cardId, token) {
+  deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this.headers,
-      Authorization: `Bearer ${token}`,
       credentials: this.credentials,
     }).then(this._checkResponse);
   }
 
-  updateUserAvatar({ avatar }, token) {
+  updateUserAvatar({ avatar }) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
-      Authorization: `Bearer ${token}`,
       credentials: this.credentials,
       body: JSON.stringify({ avatar }),
     })
@@ -132,20 +126,18 @@ class Api {
     ;
   }
 
-  likeCard(cardId, token) {
+  likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this.headers,
-      Authorization: `Bearer ${token}`,
       credentials: this.credentials,
     }).then(this._checkResponse);
   }
 
-  dislikeCard(cardId, token) {
+  dislikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this.headers,
-      Authorization: `Bearer ${token}`,
       credentials: this.credentials,
     }).then(this._checkResponse);
   }
