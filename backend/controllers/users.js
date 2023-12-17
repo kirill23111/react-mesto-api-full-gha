@@ -1,6 +1,6 @@
 // const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const { jwtKey, generateJwtToken } = require('../constans/jwt');
+const { generateJwtToken } = require('../constans/jwt');
 const User = require('../models/user'); // Путь к файлу с моделью пользователя
 // const authMiddleware = require('../middlewares/auth');
 const {
