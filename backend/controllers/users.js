@@ -130,6 +130,7 @@ const login = async (req, res, next) => {
     if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
     }
+    console.log(error);
     return next(error);
   }
 };
