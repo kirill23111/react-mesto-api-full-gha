@@ -116,6 +116,8 @@ const login = async (req, res, next) => {
       // password: user.password,
     });
 
+    console.log(jwtToken, 'signin');
+
     return res
       // .cookie([jwtKey], `Bearer ${jwtToken}`, {
       //   httpOnly: true,
@@ -128,7 +130,6 @@ const login = async (req, res, next) => {
     if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
     }
-    if (!error.message) return next(new NotFound('Произошла ошибка'));
     return next(error);
   }
 };
