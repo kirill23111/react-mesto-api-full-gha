@@ -8,6 +8,7 @@ const authMiddleware = (req, res, next) => {
     req.headers[jwtKey],
   );
 
+  console.log(req.headers, 'headers');
   console.log(req.headers[jwtKey], 'req.headers[jwtKey]');
   console.log(token, 'token');
 
