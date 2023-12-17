@@ -116,8 +116,7 @@ const login = async (req, res, next) => {
     });
 
     return res
-      .header(jwtKey, `Bearer ${jwtToken}`)
-      .send({ [jwtKey]: `Bearer ${jwtToken}` });
+      .send({ token: jwtToken });
   } catch (error) {
     if (error.name === 'ValidationError') {
       return next(new BadRequest('Ошибка валидации'));
